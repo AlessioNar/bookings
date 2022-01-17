@@ -1,0 +1,35 @@
+.my-footer {
+  height: 5em;
+  background-color: #3D3D3D;
+  margin-top: 1.5em;
+  padding: 1em;
+  color: #FFFFFF;
+  font-size: 80%;
+}
+
+.room-image {
+  max-width: 50%;
+}
+
+.notie-container {
+  box-shadow: none;
+}
+
+.datepicker {
+  z-index: 1000;
+}
+
+.swal2-html-container {
+z-index: 1;
+justify-content: center;
+margin: 1em 1.6em .3em;
+padding: 0;
+overflow: none;
+color: inherit;
+font-size: 1.125em;
+font-weight: 400;
+line-height: normal;
+text-align: center;
+word-wrap: break-word;
+word-break: break-word;
+}
