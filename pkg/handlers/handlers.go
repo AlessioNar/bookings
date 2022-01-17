@@ -6,6 +6,8 @@ import (
 	"github.com/tsawler/bookings-app/pkg/models"
 	"github.com/tsawler/bookings-app/pkg/render"
 	"net/http"
+	"encoding/json"
+	"log"
 )
 
 // Repo the repository used by the handlers
@@ -78,6 +80,27 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 
 	w.Write([]byte(fmt.Sprintf("start date is %s and end date is %s", start, end)))
 }
+
+type jsonResponse struct {
+	OK bool `json:"ok"`
+	Message string `json:"message"`
+}
+// AvailabilityJSON Handles requests for availability and sends JSON response
+func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
+	resp := jsonResponse {
+		OK:false,
+		Message: "Available!",
+	}
+
+	out, err := json.MarshalIndent(resp,"", "   ")
+	if err != nil {
+		log.Println(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(out)
+}
+
 
 // Renders the Contact page
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
