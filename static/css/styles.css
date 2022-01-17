@@ -1,20 +1,47 @@
 .my-footer {
-    height: 5em;
-    background-color: #163b65;
-    margin-top: 1.5em;
-    padding: 1em;
-    color: white;
-    font-size: 80%;
+  height: 5em;
+  background-color: #163b65;
+  margin-top: 1.5em;
+  padding: 1em;
+  color: white;
+  font-size: 80%;
 }
 
 .room-image {
-    max-width: 50%;
+  max-width: 50%;
 }
 
 .notie-container {
-    box-shadow: none;
+  box-shadow: none;
 }
 
 .datepicker {
-    z-index: 10000;
+  z-index: 10000;
+}
+
+.swal2-actions {
+  z-index: 100;
+}
+
+.swal2-html-container-nooverflow {
+  box-sizing: border-box;
+  color: rgb(84, 84, 84);
+  display: block;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 18px;
+  font-weight: 400;
+  justify-content: center;
+  line-height: normal;
+  margin-bottom: 5.4px;
+  margin-left: 28.8px;
+  margin-right: 28.8px;
+  margin-top: 18px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  pointer-events: all;
+  text-align: center;
+  word-break: break-word;
+  z-index: 1;
 }
