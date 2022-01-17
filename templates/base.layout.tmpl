@@ -83,187 +83,157 @@
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
-    {{block "js" .}}
-
-    {{end}}
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
     <script src="https://unpkg.com/notie"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{block "js" .}}
+
+    {{end}}
+
     <script>
-      let attention = Prompt();
+    let attention = Prompt();
 
-      (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          let forms = document.getElementsByClassName('needs-validation');
-          // Loop over them and prevent submission
-          Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-              if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                let forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
             }, false);
-          });
-        }, false);
-      })();
+        })();
 
-      document.getElementById("colorButton").addEventListener("click", function() {
-        // notify("This is my message", "warning");
-        //notifyModal("title", "<em>hello, world</em>", "success", "My text for the button")
-        let html = `
-        <form id="check-availability-form" action="" method="post" novalidate class="needs-validation">
-          <div class="row">
-            <div class="col">
-              <div class="row" id="reservation-dates-modal">
-                <div class="col">
-                  <input disabled required class="form-control" type="text" name="start" id="start" placeholder="Arrival">
-                </div>
-                <div class="col">
-                  <input disabled required class="form-control" type="text" name="end" id="end" placeholder="Departure">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        </form>
-        `
-        attention.custom({
-          msg: html,
-          title: "Choose your dates",
-        });
-      })
 
-      const elem = document.getElementById('reservation-dates');
+        function notify(msg, msgType) {
+            notie.alert({
+                type: msgType,
+                text: msg,
+            })
+        }
 
-      const rangePicker = new DateRangePicker(elem, {
-        format: "yyyy-mm-dd",
-      });
+        function notifyModal(title, text, icon, confirmationButtonText) {
+            Swal.fire({
+                title: title,
+                html: text,
+                icon: icon,
+                confirmButtonText: confirmationButtonText
+            })
+        }
 
-      function notify(msg, msgType) {
-        notie.alert({
-          type: msgType,
-          text: msg,
-        })
-      }
+        function Prompt() {
+            let toast = function (c) {
+                const{
+                    msg = '',
+                    icon = 'success',
+                    position = 'top-end',
 
-      function notifyModal(title, text, icon, confirmationButtonText) {
-        Swal.fire({
-          title: title,
-          html: text,
-          icon: icon,
-          confirmButtonText: confirmationButtonText
-        })
-      }
+                } = c;
 
-      function Prompt() {
-        let toast = function(c) {
-          const {
-            msg = "",
-              icon = "success",
-              position = "top-end",
-          } = c;
+                const Toast = Swal.mixin({
+                    toast: true,
+                    title: msg,
+                    position: position,
+                    icon: icon,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
 
-          const Toast = Swal.mixin({
-            toast: true,
-            title: msg,
-            position: position,
-            icon: icon,
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
+                Toast.fire({})
             }
-          })
 
-          Toast.fire({})
-        }
-        let success = function(c) {
-          const {
-            msg = "",
-              title = "",
-              footer = "",
-          } = c;
-          Swal.fire({
-            icon: 'success',
-            title: title,
-            text: msg,
-            footer: footer,
-          })
-        }
-        let error = function(c) {
-          const {
-            msg = "",
-              title = "",
-              footer = "",
-          } = c;
-          Swal.fire({
-            icon: 'error',
-            title: title,
-            text: msg,
-            footer: footer,
-          })
-        }
+            let success = function (c) {
+                const {
+                    msg = "",
+                    title = "",
+                    footer = "",
+                } = c
 
-        async function custom(c) {
-          const {
-            msg = "",
-              title = "",
-          } = c;
+                Swal.fire({
+                    icon: 'success',
+                    title: title,
+                    text: msg,
+                    footer: footer,
+                })
 
-          const {
-            value: formValues
-          } = await Swal.fire({
-            title: title,
-            html: msg,
-            backdrop: false,
-            focusConfirm: false,
-            showCancelButton: true,
-            width: 800,
-            willOpen: () => {
-              const elem = document.getElementById('reservation-dates-modal');
-              const rp = new DateRangePicker(elem, {
-                format: 'yyyy-mm-dd',
-                showOnFocus: true,
-              })
-            },
-            preConfirm: () => {
-              return [
-                document.getElementById('start').value,
-                document.getElementById('end').value
-              ]
-            },
-            didOpen: () => {
-              document.getElementById('start').removeAttribute('disabled');
-              document.getElementById('end').removeAttribute('disabled');
-              document.getElementsByClassName('swal2-html-container').removeAttribute('overflow');
             }
-          })
 
-          if (formValues) {
-            Swal.fire(JSON.stringify(formValues))
-          }
+            let error = function (c) {
+                const {
+                    msg = "",
+                    title = "",
+                    footer = "",
+                } = c
+
+                Swal.fire({
+                    icon: 'error',
+                    title: title,
+                    text: msg,
+                    footer: footer,
+                })
+
+            }
+
+            async function custom(c) {
+                const {
+                    msg = "",
+                    title = "",
+                } = c;
+
+                const { value: formValues } = await Swal.fire({
+                    title: title,
+                    html: msg,
+                    backdrop: false,
+                    focusConfirm: false,
+                    showCancelButton: true,
+                    willOpen: () => {
+                        const elem = document.getElementById("reservation-dates-modal");
+                        const rp = new DateRangePicker(elem, {
+                            format: 'yyyy-mm-dd',
+                            showOnFocus: true,
+                        })
+                    },
+                    didOpen: () => {
+                        document.getElementById("start").removeAttribute("disabled");
+                        document.getElementById("end").removeAttribute("disabled");
+                    },
+                    preConfirm: () => {
+                        return [
+                            document.getElementById('start').value,
+                            document.getElementById('end').value
+                        ]
+                    }
+                })
+
+                if (formValues) {
+                    Swal.fire(JSON.stringify(formValues))
+                }
+            }
+
+            return {
+                toast: toast,
+                success: success,
+                error: error,
+                custom: custom,
+            }
         }
-        return {
-          toast: toast,
-          success: success,
-          error: error,
-          custom: custom,
-        }
-      }
-    </script>
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-      -->
+      </script>
   </body>
 
 </html>
