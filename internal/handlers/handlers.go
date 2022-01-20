@@ -2,13 +2,13 @@ package handlers
 
 import (
 	"fmt"
+	"encoding/json"
 	"github.com/tsawler/bookings-app/internal/config"
+	"github.com/tsawler/bookings-app/internal/forms"
 	"github.com/tsawler/bookings-app/internal/models"
 	"github.com/tsawler/bookings-app/internal/render"
-	"github.com/tsawler/bookings-app/internal/forms"
-	"net/http"
-	"encoding/json"
 	"log"
+	"net/http"
 )
 
 // Repo the repository used by the handlers
@@ -63,6 +63,33 @@ func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 
 // PostReservation handles the posting of the Reservation form
 func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	reservation := models.Reservation{
+		FirstName: r.Form.Get("first_name"),
+		LastName:  r.Form.Get("last_name"),
+		Email:     r.Form.Get("email"),
+		Phone:     r.Form.Get("phone"),
+	}
+
+	form := forms.New(r.PostForm)
+
+	form.Has("first_name", r)
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["reservation"] = reservation
+
+		render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
 
 }
 
@@ -86,21 +113,22 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 	start := r.Form.Get("start")
 	end := r.Form.Get("end")
 
-	w.Write([]byte(fmt.Sprintf("start date is %s and end date is %s", start, end)))
+	w.Write([]byte(fmt.Sprintf("start date is %s and end is %s", start, end)))
 }
 
 type jsonResponse struct {
-	OK bool `json:"ok"`
+	OK      bool   `json:"ok"`
 	Message string `json:"message"`
 }
+
 // AvailabilityJSON Handles requests for availability and sends JSON response
 func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
-	resp := jsonResponse {
-		OK:false,
+	resp := jsonResponse{
+		OK:      false,
 		Message: "Available!",
 	}
 
-	out, err := json.MarshalIndent(resp,"", "   ")
+	out, err := json.MarshalIndent(resp, "", "   ")
 	if err != nil {
 		log.Println(err)
 	}
@@ -108,7 +136,6 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(out)
 }
-
 
 // Renders the Contact page
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
