@@ -1,0 +1,18 @@
+mode: set
+github.com/tsawler/bookings-app/internal/forms/errors.go:6.44,8.2 1 1
+github.com/tsawler/bookings-app/internal/forms/errors.go:11.42,13.19 2 1
+github.com/tsawler/bookings-app/internal/forms/errors.go:17.3,17.15 1 1
+github.com/tsawler/bookings-app/internal/forms/errors.go:13.19,15.4 1 1
+github.com/tsawler/bookings-app/internal/forms/forms.go:17.29,19.2 1 1
+github.com/tsawler/bookings-app/internal/forms/forms.go:22.33,27.2 1 1
+github.com/tsawler/bookings-app/internal/forms/forms.go:30.43,31.32 1 1
+github.com/tsawler/bookings-app/internal/forms/forms.go:31.32,33.39 2 1
+github.com/tsawler/bookings-app/internal/forms/forms.go:33.39,35.6 1 1
+github.com/tsawler/bookings-app/internal/forms/forms.go:40.39,42.14 2 1
+github.com/tsawler/bookings-app/internal/forms/forms.go:46.3,46.14 1 1
+github.com/tsawler/bookings-app/internal/forms/forms.go:42.14,44.4 1 1
+github.com/tsawler/bookings-app/internal/forms/forms.go:50.57,52.22 2 1
+github.com/tsawler/bookings-app/internal/forms/forms.go:56.3,56.14 1 1
+github.com/tsawler/bookings-app/internal/forms/forms.go:52.22,55.4 2 1
+github.com/tsawler/bookings-app/internal/forms/forms.go:60.38,61.41 1 1
+github.com/tsawler/bookings-app/internal/forms/forms.go:61.41,63.4 1 1
