@@ -7,4 +7,5 @@ require (
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/go-chi/chi v1.5.1 // indirect
 	github.com/justinas/nosurf v1.1.1 // indirect
+	golang.org/x/tools v0.1.9 // indirect
 )

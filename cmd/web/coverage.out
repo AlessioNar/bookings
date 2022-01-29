@@ -1,0 +1,11 @@
+mode: set
+github.com/tsawler/bookings-app/cmd/web/main.go:22.13,25.16 2 0
+github.com/tsawler/bookings-app/cmd/web/main.go:29.2,37.16 4 0
+github.com/tsawler/bookings-app/cmd/web/main.go:25.16,27.3 1 0
+github.com/tsawler/bookings-app/cmd/web/main.go:37.16,39.3 1 0
+github.com/tsawler/bookings-app/cmd/web/main.go:42.18,59.16 10 1
+github.com/tsawler/bookings-app/cmd/web/main.go:64.2,72.12 6 1
+github.com/tsawler/bookings-app/cmd/web/main.go:59.16,62.3 2 0
+github.com/tsawler/bookings-app/cmd/web/middleware.go:9.45,19.2 3 1
+github.com/tsawler/bookings-app/cmd/web/middleware.go:22.50,24.2 1 1
+github.com/tsawler/bookings-app/cmd/web/routes.go:11.49,42.2 18 1
