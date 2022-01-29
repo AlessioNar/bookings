@@ -1,19 +1,19 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"time"
+
 	"github.com/alexedwards/scs/v2"
 	"github.com/tsawler/bookings-app/internal/config"
 	"github.com/tsawler/bookings-app/internal/handlers"
-	"github.com/tsawler/bookings-app/internal/render"
-	"github.com/tsawler/bookings-app/internal/models"
 	"github.com/tsawler/bookings-app/internal/helpers"
-
-	"log"
-	"os"
-	"net/http"
-	"time"
-	"encoding/gob"
+	"github.com/tsawler/bookings-app/internal/models"
+	"github.com/tsawler/bookings-app/internal/render"
 )
 
 const portNumber = ":8080"
@@ -72,7 +72,7 @@ func run() error {
 		log.Fatal("cannot create template cache")
 		return err
 	}
-	
+
 	app.TemplateCache = tc
 	app.UseCache = false
 

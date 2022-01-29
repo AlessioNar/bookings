@@ -1,26 +1,33 @@
 package render
 
 import (
-  "github.com/alexedwards/scs/v2"
-  "github.com/tsawler/bookings-app/internal/config"
-  "github.com/tsawler/bookings-app/internal/models"
-  "net/http"
-  "encoding/gob"
-  "os"
-  "testing"
-  "time"
+	"encoding/gob"
+	"log"
+	"net/http"
+	"os"
+	"testing"
+	"time"
+
+	"github.com/alexedwards/scs/v2"
+	"github.com/tsawler/bookings-app/internal/config"
+	"github.com/tsawler/bookings-app/internal/models"
 )
 
 var session *scs.SessionManager
 var testApp config.AppConfig
 
+func TestMain(m *testing.M) {
 
-func TestMain(m * testing.M) {
-
-
-  gob.Register(models.Reservation{})
+	gob.Register(models.Reservation{})
 	// change this to true when in production
 	testApp.InProduction = false
+
+	// Set up loggers
+	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	testApp.InfoLog = infoLog
+
+	errorLog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	testApp.ErrorLog = errorLog
 
 	// set up the session
 	session = scs.New()
@@ -31,16 +38,16 @@ func TestMain(m * testing.M) {
 
 	testApp.Session = session
 
-  app = &testApp
+	app = &testApp
 
-  os.Exit(m.Run())
+	os.Exit(m.Run())
 }
 
 type myWriter struct{}
 
 func (tw *myWriter) Header() http.Header {
-  var h http.Header
-  return h
+	var h http.Header
+	return h
 }
 
 func (tw *myWriter) WriteHeader(i int) {
@@ -48,6 +55,6 @@ func (tw *myWriter) WriteHeader(i int) {
 }
 
 func (tw *myWriter) Write(b []byte) (int, error) {
-  length := len(b)
-  return length, nil
+	length := len(b)
+	return length, nil
 }
