@@ -47,7 +47,7 @@ func TestRenderTemplate(t *testing.T) {
   err = RenderTemplate(&ww, r, "non-existent.page.tmpl", &models.TemplateData{})
   if err == nil {
     t.Error("Rendered template that does not exist")
-  }
+  }  
 }
 
 func getSession() (*http.Request, error){
