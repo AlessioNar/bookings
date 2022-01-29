@@ -7,9 +7,9 @@ import (
 	"github.com/tsawler/bookings-app/internal/models"
 	"github.com/justinas/nosurf"
 	"html/template"
-	"log"
 	"net/http"
 	"path/filepath"
+	"errors"
 )
 
 var functions = template.FuncMap{}
@@ -43,7 +43,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *mod
 
 	t, ok := tc[tmpl]
 	if !ok {
-		log.Fatal("Could not get template from template cache")
+		return errors.New("Can't get template from cache")
 	}
 
 	buf := new(bytes.Buffer)
