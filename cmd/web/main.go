@@ -7,6 +7,8 @@ import (
 	"github.com/tsawler/bookings-app/internal/handlers"
 	"github.com/tsawler/bookings-app/internal/render"
 	"github.com/tsawler/bookings-app/internal/models"
+	"github.com/tsawler/bookings-app/internal/helpers"
+
 	"log"
 	"os"
 	"net/http"
@@ -76,8 +78,8 @@ func run() error {
 
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
-
 	render.NewTemplates(&app)
+	helpers.NewHelpers(&app)
 
 	return nil
 }
