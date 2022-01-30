@@ -2,14 +2,15 @@ package render
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
-	"github.com/tsawler/bookings-app/internal/config"
-	"github.com/tsawler/bookings-app/internal/models"
-	"github.com/justinas/nosurf"
 	"html/template"
 	"net/http"
 	"path/filepath"
-	"errors"
+
+	"github.com/justinas/nosurf"
+	"github.com/tsawler/bookings-app/internal/config"
+	"github.com/tsawler/bookings-app/internal/models"
 )
 
 var functions = template.FuncMap{}
@@ -17,8 +18,8 @@ var functions = template.FuncMap{}
 var app *config.AppConfig
 var pathToTemplates = "./templates"
 
-// NewTemplates sets the config for the template package
-func NewTemplates(a *config.AppConfig) {
+// NewRenderer sets the config for the template package
+func NewRenderer(a *config.AppConfig) {
 	app = a
 }
 
@@ -31,7 +32,7 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 }
 
 // RenderTemplate renders a template
-func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
+func Template(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
 	var tc map[string]*template.Template
 
 	if app.UseCache {
