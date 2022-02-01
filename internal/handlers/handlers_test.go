@@ -308,6 +308,145 @@ func TestRepository_PostReservation(t *testing.T) {
 
 }
 
+func TestRepository_PostAvailability(t *testing.T) {
+
+	// First case: rooms are not available
+	reqBody := "start_date=2050-01-01"
+	reqBody = fmt.Sprintf("%s&%s", reqBody, "end_date=2050-01-02")
+
+	req, _ := http.NewRequest("POST", "/search-availability", strings.NewReader(reqBody))
+	ctx := getCtx(req)
+	req = req.WithContext(ctx)
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	// create our response recorder, which satisfies the requirements
+	// for http.ResponseWriter
+	rr := httptest.NewRecorder()
+
+	handler := http.HandlerFunc(Repo.PostAvailability)
+
+	//Make the request to our handler
+	handler.ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusSeeOther {
+		t.Errorf("Post Availability when no rooms available gave wrong response code: got %d wanted %d", rr.Code, http.StatusSeeOther)
+	}
+
+	// Second case: rooms are available
+	reqBody = "start_date=2040-01-01"
+	reqBody = fmt.Sprintf("%s&%s", reqBody, "end_date=2040-01-02")
+
+	req, _ = http.NewRequest("POST", "/search-availability", strings.NewReader(reqBody))
+	ctx = getCtx(req)
+	req = req.WithContext(ctx)
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	// create our response recorder, which satisfies the requirements
+	// for http.ResponseWriter
+	rr = httptest.NewRecorder()
+
+	handler = http.HandlerFunc(Repo.PostAvailability)
+
+	//Make the request to our handler
+	handler.ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusOK {
+		t.Errorf("Post Availability when no rooms available gave wrong response code: got %d wanted %d", rr.Code, http.StatusOK)
+	}
+
+	// Third case: empty post body
+	req, _ = http.NewRequest("POST", "/search-availability", nil)
+	ctx = getCtx(req)
+	req = req.WithContext(ctx)
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	// create our response recorder, which satisfies the requirements
+	// for http.ResponseWriter
+	rr = httptest.NewRecorder()
+
+	handler = http.HandlerFunc(Repo.PostAvailability)
+
+	//Make the request to our handler
+	handler.ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusTemporaryRedirect {
+		t.Errorf("Post Availability with empty post body gave wrong response code: got %d wanted %d", rr.Code, http.StatusTemporaryRedirect)
+	}
+
+	// Fourth case: start_date in wrong format
+	reqBody = "start_date=invalid"
+	reqBody = fmt.Sprintf("%s&%s", reqBody, "end_date=2040-01-02")
+
+	req, _ = http.NewRequest("POST", "/search-availability", strings.NewReader(reqBody))
+	ctx = getCtx(req)
+	req = req.WithContext(ctx)
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	// create our response recorder, which satisfies the requirements
+	// for http.ResponseWriter
+	rr = httptest.NewRecorder()
+
+	handler = http.HandlerFunc(Repo.PostAvailability)
+
+	//Make the request to our handler
+	handler.ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusTemporaryRedirect {
+		t.Errorf("Post Availability with invalid start date gave wrong response code: got %d wanted %d", rr.Code, http.StatusTemporaryRedirect)
+	}
+
+	// Fifth case: end_date in wrong format
+	reqBody = "start_date=2040-01-02"
+	reqBody = fmt.Sprintf("%s&%s", reqBody, "end_date=invalid")
+
+	req, _ = http.NewRequest("POST", "/search-availability", strings.NewReader(reqBody))
+	ctx = getCtx(req)
+	req = req.WithContext(ctx)
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	// create our response recorder, which satisfies the requirements
+	// for http.ResponseWriter
+	rr = httptest.NewRecorder()
+
+	handler = http.HandlerFunc(Repo.PostAvailability)
+
+	//Make the request to our handler
+	handler.ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusTemporaryRedirect {
+		t.Errorf("Post Availability with invalid end date gave wrong response code: got %d wanted %d", rr.Code, http.StatusTemporaryRedirect)
+	}
+
+	// Fifth case: end_date in wrong format
+	reqBody = "start_date=2060-01-01"
+	reqBody = fmt.Sprintf("%s&%s", reqBody, "end_date=2060-01-02")
+
+	req, _ = http.NewRequest("POST", "/search-availability", strings.NewReader(reqBody))
+	ctx = getCtx(req)
+	req = req.WithContext(ctx)
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	// create our response recorder, which satisfies the requirements
+	// for http.ResponseWriter
+	rr = httptest.NewRecorder()
+
+	handler = http.HandlerFunc(Repo.PostAvailability)
+
+	//Make the request to our handler
+	handler.ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusTemporaryRedirect {
+		t.Errorf("Post Availability when database query fails gave wrong response code: got %d wanted %d", rr.Code, http.StatusTemporaryRedirect)
+	}
+
+}
+
 func TestRepository_AvailabilityJSON(t *testing.T) {
 
 	// 1st test Rooms are not available
