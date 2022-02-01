@@ -17,10 +17,10 @@ import (
 	"github.com/tsawler/bookings-app/internal/repository/dbrepo"
 )
 
-// Repo the repository used by the handlers
+// Repo, the repository used by the handlers
 var Repo *Repository
 
-// Repository is the repository type
+// Repository is the repository type. It takes a pointer to config.AppConfig, and a repository.DatabaseRepo
 type Repository struct {
 	App *config.AppConfig
 	DB  repository.DatabaseRepo
@@ -34,7 +34,7 @@ func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	}
 }
 
-// NewTestRepo creates a new repository
+// NewTestRepo creates a new test repository (disconnected from database)
 func NewTestRepo(a *config.AppConfig) *Repository {
 	return &Repository{
 		App: a,

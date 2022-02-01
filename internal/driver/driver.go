@@ -16,6 +16,7 @@ type DB struct {
 
 var dbConn = &DB{}
 
+// Set up database configuration
 const maxOpenDbConn = 10
 const maxIdleDbConn = 5
 const maxDbLifetime = 5 * time.Minute
