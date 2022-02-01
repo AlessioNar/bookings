@@ -4,13 +4,12 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
-	"github.com/go-chi/chi"
 	"github.com/tsawler/bookings-app/internal/config"
 	"github.com/tsawler/bookings-app/internal/driver"
 	"github.com/tsawler/bookings-app/internal/forms"
-	"github.com/tsawler/bookings-app/internal/helpers"
 	"github.com/tsawler/bookings-app/internal/models"
 	"github.com/tsawler/bookings-app/internal/render"
 	"github.com/tsawler/bookings-app/internal/repository"
@@ -358,14 +357,19 @@ func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 }
 
 func (m *Repository) ChooseRoom(w http.ResponseWriter, r *http.Request) {
-	roomID, err := strconv.Atoi(chi.URLParam(r, "id"))
+
+	exploded := strings.Split(r.RequestURI, "/")
+	roomID, err := strconv.Atoi(exploded[2])
 	if err != nil {
-		helpers.ServerError(w, err)
+		m.App.Session.Put(r.Context(), "error", "missing url parameter")
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
 	}
+
 	res, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
 	if !ok {
-		helpers.ServerError(w, err)
+		m.App.Session.Put(r.Context(), "error", "can't get reservation from session")
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
 	}
 
@@ -378,30 +382,27 @@ func (m *Repository) ChooseRoom(w http.ResponseWriter, r *http.Request) {
 
 // BookRoom takes URL parameters, builds a session variable and takes users to make-reservation screen
 func (m *Repository) BookRoom(w http.ResponseWriter, r *http.Request) {
-
 	roomID, _ := strconv.Atoi(r.URL.Query().Get("id"))
 	sd := r.URL.Query().Get("s")
 	ed := r.URL.Query().Get("e")
 
-	// Convert date from standard format to time.Time format
 	layout := "2006-01-02"
 	startDate, _ := time.Parse(layout, sd)
 	endDate, _ := time.Parse(layout, ed)
 
 	var res models.Reservation
 
+	room, err := m.DB.GetRoomByID(roomID)
+	if err != nil {
+		m.App.Session.Put(r.Context(), "error", "Can't get room from db!")
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
+	}
+
+	res.Room.RoomName = room.RoomName
 	res.RoomID = roomID
 	res.StartDate = startDate
 	res.EndDate = endDate
-
-	// Get room name by id
-	room, err := m.DB.GetRoomByID(res.RoomID)
-	if err != nil {
-		helpers.ServerError(w, err)
-	}
-
-	// Store room name in reservation and put it in session
-	res.Room.RoomName = room.RoomName
 
 	m.App.Session.Put(r.Context(), "reservation", res)
 
