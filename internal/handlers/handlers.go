@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -176,6 +177,24 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		ReservationID: newReservationID,
 		RestrictionID: 1,
 	}
+
+	htmlMessage := fmt.Sprintf(`
+		<strong>Reservation Confirmation</strong><br>
+		Dear %s:, <br>
+		This is to confirm your reservation from %s to %s
+	`, reservation.FirstName,
+		reservation.StartDate.Format("2006-01-02"),
+		reservation.EndDate.Format("2006-01-02"))
+
+	// Send notifications
+	msg := models.MailData{
+		To:      reservation.Email,
+		From:    "me@here.com",
+		Subject: "Reservation Confirmation",
+		Content: htmlMessage,
+	}
+
+	m.App.MailChan <- msg
 
 	err = m.DB.InsertRoomRestriction(restriction)
 	if err != nil {
