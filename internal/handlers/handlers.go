@@ -239,6 +239,7 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 	end_date := r.Form.Get("end_date")
 	layout := "2006-01-02"
 
+	// This gives me an error
 	startDate, err := time.Parse(layout, start_date)
 	if err != nil {
 		m.App.Session.Put(r.Context(), "error", "can't parse start date!")
@@ -247,7 +248,7 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 	}
 	endDate, err := time.Parse(layout, end_date)
 	if err != nil {
-		m.App.Session.Put(r.Context(), "error", "can't parse start date!")
+		m.App.Session.Put(r.Context(), "error", "can't parse end date!")
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
 	}
