@@ -1,0 +1,12 @@
+{{template "admin" .}}
+
+{{define "page-title"}}
+Reservation
+{{end}}
+
+{{define "content"}}
+{{$res := index .Data "reservation"}}
+<div class="col-md-12">
+  Show Reservation {{$res.FirstName}} {{$res.LastName}}
+</div>
+{{end}}
