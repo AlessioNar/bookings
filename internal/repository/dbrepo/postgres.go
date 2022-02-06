@@ -240,10 +240,59 @@ func (m *postgresDBRepo) AllReservations() ([]models.Reservation, error) {
 
 	var reservations []models.Reservation
 	query := `select r.id, r.first_name, r.last_name, r.email, r.phone,
+						r.start_date, r.end_date, r.room_id, r.created_at, r.updated_at, r.processed,
+						rm.id, rm.room_name
+						from reservations as r
+						left join rooms as rm on (r.room_id = rm.id)
+						order by r.start_date asc`
+
+	rows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return reservations, err
+	}
+
+	for rows.Next() {
+		var i models.Reservation
+		err := rows.Scan(
+			&i.ID,
+			&i.FirstName,
+			&i.LastName,
+			&i.Email,
+			&i.Phone,
+			&i.StartDate,
+			&i.EndDate,
+			&i.RoomID,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.Processed,
+			&i.Room.ID,
+			&i.Room.RoomName,
+		)
+		if err != nil {
+			return reservations, err
+		}
+		defer rows.Close()
+		reservations = append(reservations, i)
+	}
+	if err = rows.Err(); err != nil {
+		return reservations, err
+	}
+	return reservations, nil
+}
+
+// AllNewReservations returns a slice of all new reservations
+func (m *postgresDBRepo) AllNewReservations() ([]models.Reservation, error) {
+	// Set default context to three seconds
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var reservations []models.Reservation
+	query := `select r.id, r.first_name, r.last_name, r.email, r.phone,
 						r.start_date, r.end_date, r.room_id, r.created_at, r.updated_at,
 						rm.id, rm.room_name
 						from reservations as r
 						left join rooms as rm on (r.room_id = rm.id)
+						where processed = 0
 						order by r.start_date asc`
 
 	rows, err := m.DB.QueryContext(ctx, query)
