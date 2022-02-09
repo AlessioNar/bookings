@@ -700,7 +700,7 @@ func (m *Repository) AdminReservationsCalendar(w http.ResponseWriter, r *http.Re
 				}
 			} else {
 				// it's a block
-				blockMap[y.StartDate.Format("2006-01-2")] = y.RestrictionID
+				blockMap[y.StartDate.Format("2006-01-2")] = y.ID
 			}
 		}
 		data[fmt.Sprintf("reservation_map_%d", x.ID)] = reservationMap
@@ -714,4 +714,23 @@ func (m *Repository) AdminReservationsCalendar(w http.ResponseWriter, r *http.Re
 		Data:      data,
 		IntMap:    intMap,
 	})
+}
+
+// AdminPostReservationsCalendar handles post of reservation calendar
+func (m *Repository) AdminPostReservationsCalendar(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	year, _ := strconv.Atoi(r.Form.Get("y"))
+	month, _ := strconv.Atoi(r.Form.Get("m"))
+
+	// Process blocks
+
+	m.App.Session.Put(r.Context(), "flash", "Changes saved")
+
+	http.Redirect(w, r, fmt.Sprintf("/admin/reservations-calendar?y=%d&m=%d", year, month), http.StatusSeeOther)
+
 }
