@@ -9,15 +9,15 @@ import (
 	"strings"
 	"time"
 
+	"github.com/AlessioNar/bookings/internal/config"
+	"github.com/AlessioNar/bookings/internal/driver"
+	"github.com/AlessioNar/bookings/internal/forms"
+	"github.com/AlessioNar/bookings/internal/helpers"
+	"github.com/AlessioNar/bookings/internal/models"
+	"github.com/AlessioNar/bookings/internal/render"
+	"github.com/AlessioNar/bookings/internal/repository"
+	"github.com/AlessioNar/bookings/internal/repository/dbrepo"
 	"github.com/go-chi/chi"
-	"github.com/tsawler/bookings-app/internal/config"
-	"github.com/tsawler/bookings-app/internal/driver"
-	"github.com/tsawler/bookings-app/internal/forms"
-	"github.com/tsawler/bookings-app/internal/helpers"
-	"github.com/tsawler/bookings-app/internal/models"
-	"github.com/tsawler/bookings-app/internal/render"
-	"github.com/tsawler/bookings-app/internal/repository"
-	"github.com/tsawler/bookings-app/internal/repository/dbrepo"
 )
 
 // Repo, the repository used by the handlers

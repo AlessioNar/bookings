@@ -1,13 +1,13 @@
 mode: set
-github.com/tsawler/bookings-app/cmd/web/main.go:29.13,32.16 2 0
-github.com/tsawler/bookings-app/cmd/web/main.go:35.2,45.16 5 0
-github.com/tsawler/bookings-app/cmd/web/main.go:32.16,34.3 1 0
-github.com/tsawler/bookings-app/cmd/web/main.go:45.16,47.3 1 0
-github.com/tsawler/bookings-app/cmd/web/main.go:50.32,80.16 18 1
-github.com/tsawler/bookings-app/cmd/web/main.go:84.2,88.16 3 1
-github.com/tsawler/bookings-app/cmd/web/main.go:92.2,100.16 7 1
-github.com/tsawler/bookings-app/cmd/web/main.go:80.16,83.3 2 0
-github.com/tsawler/bookings-app/cmd/web/main.go:88.16,91.3 2 0
-github.com/tsawler/bookings-app/cmd/web/middleware.go:9.45,19.2 3 1
-github.com/tsawler/bookings-app/cmd/web/middleware.go:22.50,24.2 1 1
-github.com/tsawler/bookings-app/cmd/web/routes.go:12.49,42.2 20 1
+github.com/AlessioNar/bookings/cmd/web/main.go:29.13,32.16 2 0
+github.com/AlessioNar/bookings/cmd/web/main.go:35.2,45.16 5 0
+github.com/AlessioNar/bookings/cmd/web/main.go:32.16,34.3 1 0
+github.com/AlessioNar/bookings/cmd/web/main.go:45.16,47.3 1 0
+github.com/AlessioNar/bookings/cmd/web/main.go:50.32,80.16 18 1
+github.com/AlessioNar/bookings/cmd/web/main.go:84.2,88.16 3 1
+github.com/AlessioNar/bookings/cmd/web/main.go:92.2,100.16 7 1
+github.com/AlessioNar/bookings/cmd/web/main.go:80.16,83.3 2 0
+github.com/AlessioNar/bookings/cmd/web/main.go:88.16,91.3 2 0
+github.com/AlessioNar/bookings/cmd/web/middleware.go:9.45,19.2 3 1
+github.com/AlessioNar/bookings/cmd/web/middleware.go:22.50,24.2 1 1
+github.com/AlessioNar/bookings/cmd/web/routes.go:12.49,42.2 20 1

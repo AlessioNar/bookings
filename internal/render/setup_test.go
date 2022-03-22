@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/AlessioNar/bookings/internal/config"
+	"github.com/AlessioNar/bookings/internal/models"
 	"github.com/alexedwards/scs/v2"
-	"github.com/tsawler/bookings-app/internal/config"
-	"github.com/tsawler/bookings-app/internal/models"
 )
 
 var session *scs.SessionManager

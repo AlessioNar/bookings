@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/tsawler/bookings-app/internal/models"
+	"github.com/AlessioNar/bookings/internal/models"
 )
 
 func (m *testDBRepo) AllUsers() bool {

@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
+	"github.com/AlessioNar/bookings/internal/helpers"
 	"github.com/justinas/nosurf"
-	"github.com/tsawler/bookings-app/internal/helpers"
 )
 
 // NoSurf is the csrf protection middleware

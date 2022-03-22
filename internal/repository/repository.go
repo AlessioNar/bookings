@@ -3,7 +3,7 @@ package repository
 import (
 	"time"
 
-	"github.com/tsawler/bookings-app/internal/models"
+	"github.com/AlessioNar/bookings/internal/models"
 )
 
 type DatabaseRepo interface {

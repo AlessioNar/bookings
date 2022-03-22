@@ -4,8 +4,8 @@ import (
 	"html/template"
 	"log"
 
+	"github.com/AlessioNar/bookings/internal/models"
 	"github.com/alexedwards/scs/v2"
-	"github.com/tsawler/bookings-app/internal/models"
 )
 
 // AppConfig holds the application config

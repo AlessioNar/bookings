@@ -11,13 +11,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/AlessioNar/bookings/internal/config"
+	"github.com/AlessioNar/bookings/internal/models"
+	"github.com/AlessioNar/bookings/internal/render"
 	"github.com/alexedwards/scs/v2"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/justinas/nosurf"
-	"github.com/tsawler/bookings-app/internal/config"
-	"github.com/tsawler/bookings-app/internal/models"
-	"github.com/tsawler/bookings-app/internal/render"
 )
 
 var app config.AppConfig

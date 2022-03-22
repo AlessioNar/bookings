@@ -13,8 +13,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/tsawler/bookings-app/internal/driver"
-	"github.com/tsawler/bookings-app/internal/models"
+	"github.com/AlessioNar/bookings/internal/driver"
+	"github.com/AlessioNar/bookings/internal/models"
 )
 
 type postData struct {

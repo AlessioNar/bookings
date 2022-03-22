@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tsawler/bookings-app/internal/models"
+	"github.com/AlessioNar/bookings/internal/models"
 	mail "github.com/xhit/go-simple-mail/v2"
 )
 

@@ -9,13 +9,13 @@ import (
 	"os"
 	"time"
 
+	"github.com/AlessioNar/bookings/internal/config"
+	"github.com/AlessioNar/bookings/internal/driver"
+	"github.com/AlessioNar/bookings/internal/handlers"
+	"github.com/AlessioNar/bookings/internal/helpers"
+	"github.com/AlessioNar/bookings/internal/models"
+	"github.com/AlessioNar/bookings/internal/render"
 	"github.com/alexedwards/scs/v2"
-	"github.com/tsawler/bookings-app/internal/config"
-	"github.com/tsawler/bookings-app/internal/driver"
-	"github.com/tsawler/bookings-app/internal/handlers"
-	"github.com/tsawler/bookings-app/internal/helpers"
-	"github.com/tsawler/bookings-app/internal/models"
-	"github.com/tsawler/bookings-app/internal/render"
 )
 
 const portNumber = ":8080"
@@ -73,6 +73,11 @@ func run() (*driver.DB, error) {
 	dbSSL := flag.String("dbssl", "disable", "Database ssl settings (disable, prefer, require)")
 
 	flag.Parse()
+
+	if *dbName == "" || *dbUser == "" {
+		fmt.Println("Missing required flags")
+		os.Exit(1)
+	}
 
 	mailChan := make(chan models.MailData)
 	app.MailChan = mailChan
